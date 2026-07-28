@@ -27,3 +27,4 @@ export BITCOIN_ZMQ_RAWBLOCK="tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_RAWB
 envsubst < /templates/boot_portal_config.json.template > /data/gridpool/boot_portal_config.json
 envsubst < /templates/pool-config.toml.template > /data/sv2/pool-config.toml
 chmod 600 /data/gridpool/boot_portal_config.json /data/sv2/authority.env /data/sv2/pool-config.toml /data/shared/local-adapter.token
+chown -R 1000:1000 /data/gridpool /data/shared
