@@ -1,6 +1,6 @@
 {
   "bitcoin_notification_mode": "attached-node",
-  "NotificationSource": "Zmq",
+  "NotificationSource": "BitcoinZmq",
   "bitcoin_rpc_url": "${BITCOIN_RPC_URL}",
   "bitcoin_rpc_username": "${APP_BITCOIN_RPC_USER}",
   "bitcoin_rpc_password": "${APP_BITCOIN_RPC_PASS}",
