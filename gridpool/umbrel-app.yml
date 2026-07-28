@@ -1,0 +1,24 @@
+manifestVersion: 1.1
+id: gridpool
+implements: []
+category: bitcoin
+name: GridPool
+version: "0.1.0-beta.1"
+tagline: Sovereign, non-custodial pooled mining
+description: >-
+  GridPool is a peer-to-peer Bitcoin mining reward-sharing protocol. This
+  package runs the reference node and the canonical native Stratum V2 server
+  against your existing Umbrel Bitcoin Core or Bitcoin Knots node.
+developer: Grid Labs
+website: https://gridpool.net
+repo: https://github.com/gridlabs-science/gridpool-umbrel
+support: https://github.com/gridlabs-science/gridpool-umbrel/issues
+dependencies:
+  - bitcoin
+port: 5010
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+releaseNotes: >-
+  Initial sideload beta with native SV2 and Bitcoin Core/Knots RPC support.
+gallery: []

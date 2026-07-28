@@ -1,0 +1,29 @@
+authority_public_key = "${authority_public_key}"
+authority_secret_key = "${authority_secret_key}"
+cert_validity_sec = 3600
+listen_address = "0.0.0.0:34265"
+coinbase_reward_script = "addr(${GRIDPOOL_PAYOUT_ADDRESS})"
+server_id = 1
+pool_signature = "GridPool Umbrel Native SV2"
+shares_per_minute = 6.0
+share_batch_size = 10
+monitoring_address = "0.0.0.0:34290"
+monitoring_cache_refresh_secs = 15
+
+[gridpool]
+node_url = "http://gridpool:5000"
+fallback_payout_address = "${GRIDPOOL_PAYOUT_ADDRESS}"
+operator_fee_percent = 0.0
+adapter_token_file = "/shared/local-adapter.token"
+proof_spool_dir = "/data/proof-spool"
+refresh_seconds = 10
+telemetry_flush_seconds = 5
+fee_cycle_seconds = 1500
+
+[template_provider_type.BitcoinJsonRpc]
+url = "${BITCOIN_RPC_URL}"
+username = "${APP_BITCOIN_RPC_USER}"
+password = "${APP_BITCOIN_RPC_PASS}"
+timeout_seconds = 90
+retry_seconds = 2
+min_interval = 5

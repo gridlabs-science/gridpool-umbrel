@@ -1,0 +1,53 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: gridpool_gridpool_1
+      APP_PORT: 5000
+
+  init:
+    image: ghcr.io/gridlabs-science/gridpool-sv2-pool:sha-497146d
+    user: "0:0"
+    entrypoint: ["/bin/sh", "/templates/init.sh"]
+    env_file:
+      - ./settings.env
+    environment:
+      APP_BITCOIN_NODE_IP: ${APP_BITCOIN_NODE_IP}
+      APP_BITCOIN_RPC_PORT: ${APP_BITCOIN_RPC_PORT}
+      APP_BITCOIN_RPC_USER: ${APP_BITCOIN_RPC_USER}
+      APP_BITCOIN_RPC_PASS: ${APP_BITCOIN_RPC_PASS}
+      APP_BITCOIN_ZMQ_HASHBLOCK_PORT: ${APP_BITCOIN_ZMQ_HASHBLOCK_PORT}
+      APP_BITCOIN_ZMQ_RAWBLOCK_PORT: ${APP_BITCOIN_ZMQ_RAWBLOCK_PORT}
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ./templates:/templates:ro
+
+  gridpool:
+    image: ghcr.io/gridlabs-science/boot-protocol:sha-e2f25f8
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    restart: on-failure
+    stop_grace_period: 30s
+    volumes:
+      - ${APP_DATA_DIR}/data/gridpool:/data
+      - ${APP_DATA_DIR}/data/shared:/shared:ro
+    ports:
+      - "5001:5001/udp"
+
+  sv2:
+    image: ghcr.io/gridlabs-science/gridpool-sv2-pool:sha-497146d
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      gridpool:
+        condition: service_healthy
+    command: ["--config", "/data/pool-config.toml"]
+    restart: on-failure
+    stop_signal: SIGINT
+    volumes:
+      - ${APP_DATA_DIR}/data/sv2:/data
+      - ${APP_DATA_DIR}/data/shared:/shared:ro
+    ports:
+      - "34265:34265/tcp"
