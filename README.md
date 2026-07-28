@@ -17,9 +17,21 @@ cd gridpool-umbrel
 ./configure.sh bc1qYOUR_MAINNET_PAYOUT_ADDRESS
 ```
 
-Copy the `gridpool` directory into an Umbrel community app store or use
-Umbrel's documented community-app sideload flow. Install the app only after the
-Bitcoin app reports fully synchronized.
+Install the app only after the Bitcoin app reports fully synchronized. For a
+physical beta device, copy the configured app directory into the active app
+store:
+
+```bash
+rsync -av gridpool/ \
+  umbrel@umbrel.local:/home/umbrel/umbrel/app-stores/getumbrel-umbrel-apps-github-53f74447/gridpool/
+ssh umbrel@umbrel.local 'umbreld client apps.install.mutate --appId gridpool'
+```
+
+The app-store directory suffix can differ between umbrelOS versions. If that
+path is absent, inspect `/home/umbrel/umbrel/app-stores/` and use its
+`getumbrel-umbrel-apps-*` directory. GridPool can later become its own
+community-app store; the copy workflow is intentionally explicit for the first
+sideload canary.
 
 Point a native SV2 miner at:
 
