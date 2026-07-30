@@ -1,5 +1,5 @@
 manifestVersion: 1.1
-id: gridpool
+id: gridlabs-gridpool
 implements: []
 category: bitcoin
 name: GridPool
