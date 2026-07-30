@@ -4,6 +4,7 @@ implements: []
 category: bitcoin
 name: GridPool
 version: "0.1.0-beta.1"
+icon: https://raw.githubusercontent.com/gridlabs-science/gridpool-umbrel/main/gridlabs-gridpool/icon.svg
 tagline: Sovereign, non-custodial pooled mining
 description: >-
   GridPool is a peer-to-peer Bitcoin mining reward-sharing protocol. This
