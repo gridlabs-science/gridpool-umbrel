@@ -21,7 +21,7 @@ jobs:
           ruby -e 'require "yaml"; YAML.load_file("gridpool/docker-compose.yml")'
       - name: Render boot config
         env:
-          GRIDPOOL_PAYOUT_ADDRESS: bc1qrttsncr6tmqmuhkxehe0vyrtrr6nxh2tyjmc6d
+          GRIDPOOL_PAYOUT_ADDRESS: bc1qd9m04z95mglaxd9e9accmhyjdlmkfmzjprkq4p
           BITCOIN_RPC_URL: http://bitcoin:8332
           APP_BITCOIN_RPC_USER: test
           APP_BITCOIN_RPC_PASS: test
