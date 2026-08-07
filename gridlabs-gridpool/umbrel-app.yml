@@ -3,7 +3,7 @@ id: gridlabs-gridpool
 implements: []
 category: bitcoin
 name: GridPool
-version: "0.1.0-beta.1"
+version: "0.1.0-beta.2"
 icon: https://raw.githubusercontent.com/gridlabs-science/gridpool-umbrel/main/gridlabs-gridpool/icon.svg
 tagline: Sovereign, non-custodial pooled mining
 description: >-
@@ -21,5 +21,6 @@ path: ""
 defaultUsername: ""
 defaultPassword: ""
 releaseNotes: >-
-  Initial sideload beta with native SV2 and Bitcoin Core/Knots RPC support.
+  Adds the V2.2 dashboard and a safe first-run payout setup that keeps mining
+  disabled until configuration is complete.
 gallery: []
