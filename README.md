@@ -11,27 +11,30 @@ SV2 miner port plus the UDP peer-relay port are published.
 
 ## Configure and install
 
+Clone and install the package, then open GridPool from the Umbrel dashboard. On
+first launch, GridPool starts in setup-only mode and asks for a mainnet payout
+address. Mining and peer services remain disabled until the address is saved.
+Restart the GridPool app once after saving it; the package then applies the same
+address to both the reference node and native SV2 service.
+
+For scripted sideloads, the payout address may still be configured before
+installation:
+
 ```bash
-git clone https://github.com/gridlabs-science/gridpool-umbrel.git
-cd gridpool-umbrel
 ./configure.sh bc1qYOUR_MAINNET_PAYOUT_ADDRESS
 ```
 
-Install the app only after the Bitcoin app reports fully synchronized. For a
-physical beta device, copy the configured app directory into the active app
-store:
+Install the app only after the Bitcoin app reports fully synchronized. Add
+this repository URL as a Community App Store in Umbrel, then install GridPool:
 
-```bash
-rsync -av gridpool/ \
-  umbrel@umbrel.local:/home/umbrel/umbrel/app-stores/getumbrel-umbrel-apps-github-53f74447/gridpool/
-ssh umbrel@umbrel.local 'umbreld client apps.install.mutate --appId gridpool'
+```text
+https://github.com/gridlabs-science/gridpool-umbrel
 ```
 
-The app-store directory suffix can differ between umbrelOS versions. If that
-path is absent, inspect `/home/umbrel/umbrel/app-stores/` and use its
-`getumbrel-umbrel-apps-*` directory. GridPool can later become its own
-community-app store; the copy workflow is intentionally explicit for the first
-sideload canary.
+For a manual sideload, copy `gridlabs-gridpool/` into the active app-store
+directory as `gridlabs-gridpool/`, then install the app ID
+`gridlabs-gridpool`. App-store directory names vary between umbrelOS versions;
+inspect `/home/umbrel/umbrel/app-stores/` rather than assuming a fixed suffix.
 
 Point a native SV2 miner at:
 
@@ -44,15 +47,15 @@ worker label instead, the package payout address is used.
 
 ## Persistence and backup
 
-`gridpool/data` contains node identity, consensus state, the local adapter
+`gridlabs-gridpool/data` contains node identity, consensus state, the local adapter
 token, SV2 authority keys, and the durable proof spool. Back it up before
 uninstalling or moving the app. Bitcoin chain data is owned by the separate
 Bitcoin app and is not duplicated.
 
 ## Current limitations
 
-- Sideload configuration is a shell step; an in-app first-run payout-address
-  screen remains required before submission to the official app store.
+- Initial in-app configuration requires one app restart after the payout
+  address is saved.
 - Core IPC is intentionally not mounted across the app boundary. Standard
   `getblocktemplate`/`submitblock` RPC is used for both Core and Knots.
 - DATUM and Stratum V1 adapters are not included in the initial appliance beta.

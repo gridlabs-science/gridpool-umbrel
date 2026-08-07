@@ -14,11 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check shell scripts
-        run: bash -n configure.sh gridpool/templates/init.sh
+        run: bash -n configure.sh gridlabs-gridpool/templates/init.sh
       - name: Parse YAML
         run: |
-          ruby -e 'require "yaml"; YAML.load_file("gridpool/umbrel-app.yml")'
-          ruby -e 'require "yaml"; YAML.load_file("gridpool/docker-compose.yml")'
+          ruby -e 'require "yaml"; YAML.load_file("gridlabs-gridpool/umbrel-app.yml")'
+          ruby -e 'require "yaml"; YAML.load_file("gridlabs-gridpool/docker-compose.yml")'
       - name: Render boot config
         env:
           GRIDPOOL_PAYOUT_ADDRESS: bc1qd9m04z95mglaxd9e9accmhyjdlmkfmzjprkq4p
@@ -28,5 +28,5 @@ jobs:
           BITCOIN_ZMQ_HASHBLOCK: tcp://bitcoin:28332
           BITCOIN_ZMQ_RAWBLOCK: tcp://bitcoin:28333
         run: |
-          envsubst < gridpool/templates/boot_portal_config.json.template > /tmp/config.json
+          envsubst < gridlabs-gridpool/templates/boot_portal_config.json.template > /tmp/config.json
           jq empty /tmp/config.json

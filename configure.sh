@@ -7,7 +7,7 @@ if [[ ! "${address}" =~ ^(bc1|1|3)[A-Za-z0-9]{20,90}$ ]]; then
   exit 1
 fi
 
-settings="$(dirname "$0")/gridpool/settings.env"
+settings="$(dirname "$0")/gridlabs-gridpool/settings.env"
 printf 'GRIDPOOL_PAYOUT_ADDRESS=%s\n' "${address}" > "${settings}"
 chmod 600 "${settings}"
-echo "Configured ${settings}. Do not commit this local file."
+echo "Configured ${settings}. Restart or reinstall the GridPool app to apply it."
