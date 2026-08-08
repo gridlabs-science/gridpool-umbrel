@@ -22,7 +22,7 @@ services:
       - ./templates:/templates:ro
 
   gridpool:
-    image: ghcr.io/gridlabs-science/boot-protocol:sha-320c111
+    image: ghcr.io/gridlabs-science/boot-protocol:sha-9ac862a
     depends_on:
       init:
         condition: service_completed_successfully
