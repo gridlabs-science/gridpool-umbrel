@@ -3,7 +3,7 @@ id: gridlabs-gridpool
 implements: []
 category: bitcoin
 name: GridPool
-version: "0.1.0-beta.3"
+version: "0.1.0-beta.4"
 icon: https://raw.githubusercontent.com/gridlabs-science/gridpool-umbrel/main/gridlabs-gridpool/icon.svg
 tagline: Sovereign, non-custodial pooled mining
 description: >-
@@ -21,6 +21,5 @@ path: ""
 defaultUsername: ""
 defaultPassword: ""
 releaseNotes: >-
-  Isolates and coalesces dashboard reads so the Web UI cannot exhaust public
-  API rate limits.
+  Removes the required `settings.env` file from the docker-compose.yml
 gallery: []

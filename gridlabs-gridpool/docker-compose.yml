@@ -8,8 +8,6 @@ services:
     image: ghcr.io/gridlabs-science/gridpool-sv2-pool:sha-bba078e
     user: "0:0"
     entrypoint: ["/bin/sh", "/templates/init.sh"]
-    env_file:
-      - ./settings.env
     environment:
       APP_BITCOIN_NODE_IP: ${APP_BITCOIN_NODE_IP}
       APP_BITCOIN_RPC_PORT: ${APP_BITCOIN_RPC_PORT}
