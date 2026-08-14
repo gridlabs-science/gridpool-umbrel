@@ -14,15 +14,10 @@ SV2 miner port plus the UDP peer-relay port are published.
 Clone and install the package, then open GridPool from the Umbrel dashboard. On
 first launch, GridPool starts in setup-only mode and asks for a mainnet payout
 address. Mining and peer services remain disabled until the address is saved.
-Restart the GridPool app once after saving it; the package then applies the same
-address to both the reference node and native SV2 service.
-
-For scripted sideloads, the payout address may still be configured before
-installation:
-
-```bash
-./configure.sh bc1qYOUR_MAINNET_PAYOUT_ADDRESS
-```
+After the address is saved, the reference node automatically restarts into
+operational mode and the native SV2 service generates its configuration from
+the same persisted address. Umbrel does not need to inject a custom payout
+environment variable.
 
 Install the app only after the Bitcoin app reports fully synchronized. Add
 this repository URL as a Community App Store in Umbrel, then install GridPool:
@@ -54,8 +49,6 @@ Bitcoin app and is not duplicated.
 
 ## Current limitations
 
-- Initial in-app configuration requires one app restart after the payout
-  address is saved.
 - Core IPC is intentionally not mounted across the app boundary. Standard
   `getblocktemplate`/`submitblock` RPC is used for both Core and Knots.
 - DATUM and Stratum V1 adapters are not included in the initial appliance beta.
