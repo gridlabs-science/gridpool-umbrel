@@ -14,14 +14,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check shell scripts
-        run: bash -n configure.sh gridlabs-gridpool/templates/init.sh
+        run: >-
+          sh -n
+          gridlabs-gridpool/templates/init.sh
+          gridlabs-gridpool/templates/gridpool-entrypoint.sh
+          gridlabs-gridpool/templates/sv2-entrypoint.sh
       - name: Parse YAML
         run: |
           ruby -e 'require "yaml"; YAML.load_file("gridlabs-gridpool/umbrel-app.yml")'
           ruby -e 'require "yaml"; YAML.load_file("gridlabs-gridpool/docker-compose.yml")'
       - name: Render boot config
         env:
-          GRIDPOOL_PAYOUT_ADDRESS: bc1qd9m04z95mglaxd9e9accmhyjdlmkfmzjprkq4p
+          GRIDPOOL_PAYOUT_ADDRESS: ""
           BITCOIN_RPC_URL: http://bitcoin:8332
           APP_BITCOIN_RPC_USER: test
           APP_BITCOIN_RPC_PASS: test
@@ -30,3 +34,11 @@ jobs:
         run: |
           envsubst < gridlabs-gridpool/templates/boot_portal_config.json.template > /tmp/config.json
           jq empty /tmp/config.json
+          test "$(jq -r .pool_payout_script /tmp/config.json)" = ""
+      - name: Verify UI-driven payout lifecycle
+        run: |
+          ! grep -q 'env_file' gridlabs-gridpool/docker-compose.yml
+          test "$(grep -Fc '${APP_DATA_DIR}/templates:/templates:ro' gridlabs-gridpool/docker-compose.yml)" = "3"
+          ! grep -Fq '${GRIDPOOL_PAYOUT_ADDRESS:-}' gridlabs-gridpool/templates/init.sh
+          grep -q 'boot_portal_config.local.json' gridlabs-gridpool/templates/gridpool-entrypoint.sh
+          grep -q 'boot_portal_config.local.json' gridlabs-gridpool/templates/sv2-entrypoint.sh
