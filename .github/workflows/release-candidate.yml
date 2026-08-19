@@ -1,0 +1,38 @@
+name: Package release candidate
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*-beta.*']
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/verify-package.sh
+      - name: Create source package
+        run: |
+          tar -czf gridpool-umbrel.tar.gz gridlabs-gridpool
+          sha256sum gridpool-umbrel.tar.gz > gridpool-umbrel.tar.gz.sha256
+      - name: Generate SPDX SBOM
+        uses: anchore/sbom-action@v0.24.0
+        with:
+          path: gridlabs-gridpool
+          format: spdx-json
+          output-file: gridpool-umbrel.spdx.json
+      - uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: gridpool-umbrel.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gridpool-umbrel
+          path: |
+            gridpool-umbrel.tar.gz
+            gridpool-umbrel.tar.gz.sha256
+            gridpool-umbrel.spdx.json

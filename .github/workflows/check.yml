@@ -42,3 +42,33 @@ jobs:
           ! grep -Fq '${GRIDPOOL_PAYOUT_ADDRESS:-}' gridlabs-gridpool/templates/init.sh
           grep -q 'boot_portal_config.local.json' gridlabs-gridpool/templates/gridpool-entrypoint.sh
           grep -q 'boot_portal_config.local.json' gridlabs-gridpool/templates/sv2-entrypoint.sh
+      - name: Verify release inputs and package contract
+        run: ./scripts/verify-package.sh
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan repository history for secrets
+        run: >-
+          docker run --rm -v "$PWD:/repo"
+          ghcr.io/gitleaks/gitleaks@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+          detect --source=/repo --redact --no-banner
+
+  image-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          - ghcr.io/gridlabs-science/boot-protocol@sha256:1a302f3d1a1de3df7b26a4cde6372bf31d453bd024ca697bd6f0a1a09c90b601
+          - ghcr.io/gridlabs-science/gridpool-sv2-pool@sha256:3ab32ca79583fd81acaef5f7aae27ba8175d0fde2f6a80d2968d92349f91af4e
+    steps:
+      - uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ matrix.image }}
+          format: table
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: '1'
