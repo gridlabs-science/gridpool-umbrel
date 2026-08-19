@@ -3,7 +3,7 @@ id: gridlabs-gridpool
 implements: []
 category: bitcoin
 name: GridPool
-version: "0.1.0-beta.5"
+version: "0.1.0-beta.6"
 icon: https://raw.githubusercontent.com/gridlabs-science/gridpool-umbrel/main/gridlabs-gridpool/icon.svg
 tagline: Sovereign, non-custodial pooled mining
 description: >-
@@ -21,6 +21,6 @@ path: ""
 defaultUsername: ""
 defaultPassword: ""
 releaseNotes: >-
-  Pins immutable multi-architecture images, disables the legacy dashboard, and
-  documents tested backup, upgrade, and recovery procedures.
+  Keeps native SV2 idle while attached Bitcoin work is unsafe and adds
+  digest-pinned appliance release checks.
 gallery: []

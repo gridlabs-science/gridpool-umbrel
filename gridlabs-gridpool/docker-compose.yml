@@ -5,7 +5,7 @@ services:
       APP_PORT: 5000
 
   init:
-    image: ghcr.io/gridlabs-science/gridpool-sv2-pool@sha256:3ab32ca79583fd81acaef5f7aae27ba8175d0fde2f6a80d2968d92349f91af4e
+    image: ghcr.io/gridlabs-science/gridpool-sv2-pool@sha256:6bea980aa517f308ee176d1a85d5e274e69a92fe99df1b321a7a720ae5db3e70
     user: "0:0"
     entrypoint: ["/bin/sh", "/templates/init.sh"]
     environment:
@@ -43,7 +43,7 @@ services:
       retries: 4
 
   sv2:
-    image: ghcr.io/gridlabs-science/gridpool-sv2-pool@sha256:3ab32ca79583fd81acaef5f7aae27ba8175d0fde2f6a80d2968d92349f91af4e
+    image: ghcr.io/gridlabs-science/gridpool-sv2-pool@sha256:6bea980aa517f308ee176d1a85d5e274e69a92fe99df1b321a7a720ae5db3e70
     depends_on:
       init:
         condition: service_completed_successfully
