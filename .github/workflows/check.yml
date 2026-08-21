@@ -60,6 +60,7 @@ jobs:
   image-scan:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         image:
           - ghcr.io/gridlabs-science/boot-protocol@sha256:1a302f3d1a1de3df7b26a4cde6372bf31d453bd024ca697bd6f0a1a09c90b601
