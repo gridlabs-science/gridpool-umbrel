@@ -64,7 +64,7 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - ghcr.io/gridlabs-science/boot-protocol@sha256:1a302f3d1a1de3df7b26a4cde6372bf31d453bd024ca697bd6f0a1a09c90b601
+          - ghcr.io/gridlabs-science/boot-protocol@sha256:8672c835b14f8fcad8a358e5b80ae945d6973b5039c706437b3b1c4bdff6f5d5
           - ghcr.io/gridlabs-science/gridpool-sv2-pool@sha256:3de54e9c51953d2b5089ae90a25b9a0fa046c18c4ae0139b768b77a4cf0ed50e
     steps:
       - uses: aquasecurity/trivy-action@v0.36.0
