@@ -42,6 +42,7 @@ jobs:
       - name: Verify UI-driven payout lifecycle
         run: |
           ! grep -q 'env_file' gridlabs-gridpool/docker-compose.yml
+          grep -q 'APP_HOST: gridpool$' gridlabs-gridpool/docker-compose.yml
           test "$(grep -Fc '${APP_DATA_DIR}/templates:/templates:ro' gridlabs-gridpool/docker-compose.yml)" = "3"
           ! grep -Fq '${GRIDPOOL_PAYOUT_ADDRESS:-}' gridlabs-gridpool/templates/init.sh
           grep -q 'boot_portal_config.local.json' gridlabs-gridpool/templates/gridpool-entrypoint.sh
