@@ -28,5 +28,8 @@
   "work_set_reserve_multiplier": 3,
   "local_adapter_token_file": "/shared/local-adapter.token",
   "local_sv2_api_url": "http://sv2:34290/api/v1/global",
+  "native_sv2_enabled": true,
+  "native_sv2_public_host": "",
+  "native_sv2_public_port": 34265,
   "enable_admin_api": false
 }

@@ -30,3 +30,6 @@ jobs:
         run: |
           envsubst < gridlabs-gridpool/templates/boot_portal_config.json.template > /tmp/config.json
           jq empty /tmp/config.json
+          test "$(jq -r '.native_sv2_enabled' /tmp/config.json)" = "true"
+          test "$(jq -r '.native_sv2_public_port' /tmp/config.json)" = "34265"
+          test "$(jq -r '.enable_admin_api' /tmp/config.json)" = "false"
