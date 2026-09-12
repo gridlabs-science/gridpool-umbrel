@@ -1,6 +1,7 @@
 name: Check
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
@@ -14,14 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check shell scripts
-        run: bash -n configure.sh gridlabs-gridpool/templates/init.sh
+        run: >-
+          sh -n
+          gridlabs-gridpool/templates/init.sh
+          gridlabs-gridpool/templates/gridpool-entrypoint.sh
+          gridlabs-gridpool/templates/sv2-entrypoint.sh
       - name: Parse YAML
         run: |
           ruby -e 'require "yaml"; YAML.load_file("gridlabs-gridpool/umbrel-app.yml")'
           ruby -e 'require "yaml"; YAML.load_file("gridlabs-gridpool/docker-compose.yml")'
       - name: Render boot config
         env:
-          GRIDPOOL_PAYOUT_ADDRESS: bc1qd9m04z95mglaxd9e9accmhyjdlmkfmzjprkq4p
+          GRIDPOOL_PAYOUT_ADDRESS: ""
           BITCOIN_RPC_URL: http://bitcoin:8332
           APP_BITCOIN_RPC_USER: test
           APP_BITCOIN_RPC_PASS: test
@@ -33,3 +38,42 @@ jobs:
           test "$(jq -r '.native_sv2_enabled' /tmp/config.json)" = "true"
           test "$(jq -r '.native_sv2_public_port' /tmp/config.json)" = "34265"
           test "$(jq -r '.enable_admin_api' /tmp/config.json)" = "false"
+          test "$(jq -r .pool_payout_script /tmp/config.json)" = ""
+      - name: Verify UI-driven payout lifecycle
+        run: |
+          ! grep -q 'env_file' gridlabs-gridpool/docker-compose.yml
+          test "$(grep -Fc '${APP_DATA_DIR}/templates:/templates:ro' gridlabs-gridpool/docker-compose.yml)" = "3"
+          ! grep -Fq '${GRIDPOOL_PAYOUT_ADDRESS:-}' gridlabs-gridpool/templates/init.sh
+          grep -q 'boot_portal_config.local.json' gridlabs-gridpool/templates/gridpool-entrypoint.sh
+          grep -q 'boot_portal_config.local.json' gridlabs-gridpool/templates/sv2-entrypoint.sh
+      - name: Verify release inputs and package contract
+        run: ./scripts/verify-package.sh
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan repository history for secrets
+        run: >-
+          docker run --rm -v "$PWD:/repo"
+          ghcr.io/gitleaks/gitleaks@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+          detect --source=/repo --redact --no-banner
+
+  image-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - ghcr.io/gridlabs-science/boot-protocol@sha256:8672c835b14f8fcad8a358e5b80ae945d6973b5039c706437b3b1c4bdff6f5d5
+          - ghcr.io/gridlabs-science/gridpool-sv2-pool@sha256:3de54e9c51953d2b5089ae90a25b9a0fa046c18c4ae0139b768b77a4cf0ed50e
+    steps:
+      - uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ matrix.image }}
+          format: table
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: '1'

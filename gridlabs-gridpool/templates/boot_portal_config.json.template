@@ -9,7 +9,7 @@
   "bitcoin_zmq_rawblock_endpoint": "${BITCOIN_ZMQ_RAWBLOCK}",
   "bitcoin_network": "mainnet",
   "enable_web_ui": true,
-  "enable_legacy_ui": true,
+  "enable_legacy_ui": false,
   "boot_network_id": "mainnet-beta",
   "boot_protocol_version": 22,
   "v22_activation_block_height": 959500,

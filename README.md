@@ -9,20 +9,18 @@ This is a sideload beta. The application UI remains behind Umbrel
 authentication, the node participates outbound-only by default, and only the
 SV2 miner port plus the UDP peer-relay port are published.
 
+The wrapper pins immutable, attested multi-architecture OCI image digests. It
+does not follow a mutable branch or `latest` image.
+
 ## Configure and install
 
 Clone and install the package, then open GridPool from the Umbrel dashboard. On
 first launch, GridPool starts in setup-only mode and asks for a mainnet payout
 address. Mining and peer services remain disabled until the address is saved.
-Restart the GridPool app once after saving it; the package then applies the same
-address to both the reference node and native SV2 service.
-
-For scripted sideloads, the payout address may still be configured before
-installation:
-
-```bash
-./configure.sh bc1qYOUR_MAINNET_PAYOUT_ADDRESS
-```
+After the address is saved, the reference node automatically restarts into
+operational mode and the native SV2 service generates its configuration from
+the same persisted address. Umbrel does not need to inject a custom payout
+environment variable.
 
 Install the app only after the Bitcoin app reports fully synchronized. Add
 this repository URL as a Community App Store in Umbrel, then install GridPool:
@@ -63,10 +61,31 @@ token, SV2 authority keys, and the durable proof spool. Back it up before
 uninstalling or moving the app. Bitcoin chain data is owned by the separate
 Bitcoin app and is not duplicated.
 
+Before upgrading or uninstalling, stop GridPool and back up the complete data
+directory with ownership and permissions preserved. Record the node-ID
+fingerprint shown by the GridPool UI. Never copy Bitcoin RPC credentials from
+the generated config into a support bundle.
+
+Upgrade by replacing the app definition and recreating the app containers while
+leaving `gridlabs-gridpool/data` in place. After startup, verify that the node ID,
+payout address, Bitcoin authority, and SV2 authority are unchanged.
+
+For recovery, reinstall the same or a compatible package version, stop it,
+restore the saved data directory, then start the app. Deleting `pool_state.json`
+is not a supported recovery procedure. A normal Umbrel uninstall may remove app
+data, so retain a verified external backup first.
+
+The legacy dashboard is disabled in the appliance package. Native SV2 is the
+only supported miner-facing service; DATUM and raw SV1 remain absent.
+
 ## Current limitations
 
-- Initial in-app configuration requires one app restart after the payout
-  address is saved.
 - Core IPC is intentionally not mounted across the app boundary. Standard
   `getblocktemplate`/`submitblock` RPC is used for both Core and Knots.
 - DATUM and Stratum V1 adapters are not included in the initial appliance beta.
+
+## Release verification
+
+```bash
+./scripts/verify-package.sh
+```
