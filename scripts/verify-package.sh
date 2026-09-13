@@ -19,6 +19,8 @@ grep -q '"trusted_private_dashboard_enabled": true' "$template"
 grep -q 'GRIDPOOL_TRUSTED_PRIVATE_DASHBOARD_ENABLED: "true"' "$compose"
 grep -q 'GRIDPOOL_NATIVE_SV2_AUTHORITY_PUBLIC_KEY' gridlabs-gridpool/templates/init.sh
 grep -q '/shared/sv2-public.env' gridlabs-gridpool/templates/gridpool-entrypoint.sh
+grep -q 'GRIDPOOL_NATIVE_SV2_AUTHORITY_PUBLIC_KEY=' "$compose"
+grep -q '. /shared/sv2-public.env' "$compose"
 grep -q 'native_sv2_authority_public_key' "$template"
 grep -q "GRIDPOOL_PACKAGE_VERSION: \"${package_version}\"" "$compose"
 ! grep -q 'env_file' "$compose"

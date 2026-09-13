@@ -7,7 +7,14 @@ services:
   init:
     image: ghcr.io/gridlabs-science/gridpool-sv2-pool@sha256:3de54e9c51953d2b5089ae90a25b9a0fa046c18c4ae0139b768b77a4cf0ed50e
     user: "0:0"
-    entrypoint: ["/bin/sh", "/templates/init.sh"]
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        /bin/sh /templates/init.sh
+        sed -n 's/^authority_public_key=/GRIDPOOL_NATIVE_SV2_AUTHORITY_PUBLIC_KEY=/p' /data/sv2/authority.env > /data/shared/sv2-public.env
+        test -s /data/shared/sv2-public.env
+        chmod 644 /data/shared/sv2-public.env
     environment:
       GRIDPOOL_PACKAGE_VERSION: "0.2.2-beta.7"
       APP_BITCOIN_NODE_IP: ${APP_BITCOIN_NODE_IP}
@@ -25,7 +32,14 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
-    entrypoint: ["/bin/sh", "/templates/gridpool-entrypoint.sh"]
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -a
+        . /shared/sv2-public.env
+        set +a
+        exec /bin/sh /templates/gridpool-entrypoint.sh
     restart: unless-stopped
     stop_grace_period: 30s
     environment:
