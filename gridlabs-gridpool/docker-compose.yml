@@ -20,7 +20,7 @@ services:
       - ${APP_DATA_DIR}/templates:/templates:ro
 
   gridpool:
-    image: ghcr.io/gridlabs-science/boot-protocol@sha256:1815d168e6f3c36d53af810f19058a8dcea7d326eb1cba97222e58c7119656f2
+    image: ghcr.io/gridlabs-science/boot-protocol@sha256:8c4e46c8f8d7bc0bf3dca22f566f8d3b13a36d323c0e12aff8a731bd577fdf19
     depends_on:
       init:
         condition: service_completed_successfully
@@ -29,6 +29,7 @@ services:
     stop_grace_period: 30s
     environment:
       BOOT_PORTAL_LOCAL_CONFIG_PATH: /shared/boot_portal_config.local.json
+      GRIDPOOL_TRUSTED_PRIVATE_DASHBOARD_ENABLED: "true"
     volumes:
       - ${APP_DATA_DIR}/data/gridpool:/data
       - ${APP_DATA_DIR}/data/shared:/shared
