@@ -16,6 +16,9 @@ grep -q '"enable_legacy_ui": false' "$template"
 grep -q '"enable_admin_api": false' "$template"
 grep -q '"trusted_private_dashboard_enabled": true' "$template"
 grep -q 'GRIDPOOL_TRUSTED_PRIVATE_DASHBOARD_ENABLED: "true"' "$compose"
+grep -q 'GRIDPOOL_NATIVE_SV2_AUTHORITY_PUBLIC_KEY' gridlabs-gridpool/templates/init.sh
+grep -q '/shared/sv2-public.env' gridlabs-gridpool/templates/gridpool-entrypoint.sh
+grep -q 'native_sv2_authority_public_key' "$template"
 ! grep -q 'env_file' "$compose"
 ! grep -Eq '(^|[[:space:]])(8332|28332|28333|34290|5000):' "$compose"
 grep -q '34265:34265/tcp' "$compose"

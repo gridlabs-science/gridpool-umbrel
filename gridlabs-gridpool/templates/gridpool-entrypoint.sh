@@ -3,6 +3,12 @@ set -eu
 
 setup_override=/shared/boot_portal_config.local.json
 
+if [ -s /shared/sv2-public.env ]; then
+  set -a
+  . /shared/sv2-public.env
+  set +a
+fi
+
 setup_is_complete() {
   [ -s "${setup_override}" ] &&
     grep -q '"setup_completed"[[:space:]]*:[[:space:]]*true' "${setup_override}" &&

@@ -14,6 +14,14 @@ if [ ! -s /data/sv2/authority.env ]; then
   /app/pool_sv2 --generate-authority-keypair > /data/sv2/authority.env
 fi
 
+authority_public_key="$(sed -n 's/^authority_public_key=//p' /data/sv2/authority.env | head -n 1)"
+if [ -z "${authority_public_key}" ]; then
+  echo "Native SV2 authority public key is missing" >&2
+  exit 1
+fi
+export authority_public_key
+printf 'GRIDPOOL_NATIVE_SV2_AUTHORITY_PUBLIC_KEY=%s\n' "${authority_public_key}" > /data/shared/sv2-public.env
+
 export BITCOIN_RPC_URL="http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
 export BITCOIN_ZMQ_HASHBLOCK="tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_HASHBLOCK_PORT}"
 export BITCOIN_ZMQ_RAWBLOCK="tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_RAWBLOCK_PORT}"
@@ -22,4 +30,5 @@ rm -f /data/sv2/pool-config.toml
 echo "GridPool payout address will be configured through the in-app setup page."
 
 chmod 600 /data/gridpool/boot_portal_config.json /data/sv2/authority.env /data/shared/local-adapter.token
+chmod 600 /data/shared/sv2-public.env
 chown -R 1000:1000 /data/gridpool /data/sv2 /data/shared

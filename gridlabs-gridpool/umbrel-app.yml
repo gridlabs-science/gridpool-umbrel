@@ -3,7 +3,7 @@ id: gridlabs-gridpool
 implements: []
 category: bitcoin
 name: GridPool
-version: "0.2.2-beta.6"
+version: "0.2.2-beta.7"
 icon: https://raw.githubusercontent.com/gridlabs-science/gridpool-umbrel/main/gridlabs-gridpool/icon.svg
 tagline: Sovereign, non-custodial pooled mining
 description: >-
@@ -21,7 +21,7 @@ path: "setup"
 defaultUsername: ""
 defaultPassword: ""
 releaseNotes: >-
-  Early beta with reliable payout onboarding, prominent native SV2 connection
-  guidance, private appliance diagnostics, mature-network bootstrap, and V2.2
-  security hardening.
+  Early beta with explicit setup completion, complete native SV2 connection
+  details including the Noise authority key, private appliance diagnostics,
+  mature-network bootstrap, and V2.2 security hardening.
 gallery: []

@@ -32,6 +32,7 @@
   "native_sv2_enabled": true,
   "native_sv2_public_host": "",
   "native_sv2_public_port": 34265,
+  "native_sv2_authority_public_key": "${authority_public_key}",
   "enable_admin_api": false,
   "trusted_private_dashboard_enabled": true
 }
