@@ -3,7 +3,7 @@ id: gridlabs-gridpool
 implements: []
 category: bitcoin
 name: GridPool
-version: "0.2.2-beta.2"
+version: "0.2.2-beta.4"
 icon: https://raw.githubusercontent.com/gridlabs-science/gridpool-umbrel/main/gridlabs-gridpool/icon.svg
 tagline: Sovereign, non-custodial pooled mining
 description: >-
@@ -17,10 +17,10 @@ support: https://github.com/gridlabs-science/gridpool-umbrel/issues
 dependencies:
   - bitcoin
 port: 5010
-path: ""
+path: "setup"
 defaultUsername: ""
 defaultPassword: ""
 releaseNotes: >-
-  Early beta with V2.2 security hardening, native SV2 mining, attached-node
-  safety checks, authenticated UDP relay, and digest-pinned images.
+  Early beta with automatic payout onboarding, fresh-node state bootstrap,
+  V2.2 security hardening, native SV2 mining, and digest-pinned images.
 gallery: []

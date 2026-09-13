@@ -1,7 +1,7 @@
 services:
   app_proxy:
     environment:
-      APP_HOST: gridlabs-gridpool_gridpool_1
+      APP_HOST: gridpool
       APP_PORT: 5000
 
   init:
@@ -20,7 +20,7 @@ services:
       - ${APP_DATA_DIR}/templates:/templates:ro
 
   gridpool:
-    image: ghcr.io/gridlabs-science/boot-protocol@sha256:8672c835b14f8fcad8a358e5b80ae945d6973b5039c706437b3b1c4bdff6f5d5
+    image: ghcr.io/gridlabs-science/boot-protocol@sha256:5afeadca16f09800697ac425f88628b5427b72ef6a40ea220b74c6124b81e935
     depends_on:
       init:
         condition: service_completed_successfully

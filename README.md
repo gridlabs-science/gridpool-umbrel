@@ -40,8 +40,19 @@ Point a native SV2 miner at:
 stratum2+noise://UMBREL_LAN_IP:34265
 ```
 
+The GridPool dashboard also shows this endpoint under **Connect miner**. The
+hostname is inferred from the browser when the package does not have a public
+hostname configured, so use the Umbrel device's LAN hostname or IP if the
+displayed browser hostname is not reachable from the miner.
+
 The per-channel SV2 username may be a valid mainnet payout address. If it is a
 worker label instead, the package payout address is used.
+
+The initial appliance package disables GridPool's administrative API. It does
+not provision an operator password; the dashboard hides operator-only controls
+and exposes the non-sensitive miner connection and health information needed
+for normal operation. Advanced operators may explicitly enable the API and set
+a strong key in local configuration.
 
 ## Persistence and backup
 

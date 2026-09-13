@@ -35,10 +35,14 @@ jobs:
         run: |
           envsubst < gridlabs-gridpool/templates/boot_portal_config.json.template > /tmp/config.json
           jq empty /tmp/config.json
+          test "$(jq -r '.native_sv2_enabled' /tmp/config.json)" = "true"
+          test "$(jq -r '.native_sv2_public_port' /tmp/config.json)" = "34265"
+          test "$(jq -r '.enable_admin_api' /tmp/config.json)" = "false"
           test "$(jq -r .pool_payout_script /tmp/config.json)" = ""
       - name: Verify UI-driven payout lifecycle
         run: |
           ! grep -q 'env_file' gridlabs-gridpool/docker-compose.yml
+          grep -q 'APP_HOST: gridpool$' gridlabs-gridpool/docker-compose.yml
           test "$(grep -Fc '${APP_DATA_DIR}/templates:/templates:ro' gridlabs-gridpool/docker-compose.yml)" = "3"
           ! grep -Fq '${GRIDPOOL_PAYOUT_ADDRESS:-}' gridlabs-gridpool/templates/init.sh
           grep -q 'boot_portal_config.local.json' gridlabs-gridpool/templates/gridpool-entrypoint.sh
@@ -64,7 +68,7 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - ghcr.io/gridlabs-science/boot-protocol@sha256:8672c835b14f8fcad8a358e5b80ae945d6973b5039c706437b3b1c4bdff6f5d5
+          - ghcr.io/gridlabs-science/boot-protocol@sha256:a0481ca57db41f9c88ece8f29c7f149755402c67fe1199df03e9612fd3430563
           - ghcr.io/gridlabs-science/gridpool-sv2-pool@sha256:3de54e9c51953d2b5089ae90a25b9a0fa046c18c4ae0139b768b77a4cf0ed50e
     steps:
       - uses: aquasecurity/trivy-action@v0.36.0
