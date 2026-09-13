@@ -9,6 +9,7 @@ services:
     user: "0:0"
     entrypoint: ["/bin/sh", "/templates/init.sh"]
     environment:
+      GRIDPOOL_PACKAGE_VERSION: "0.2.2-beta.7"
       APP_BITCOIN_NODE_IP: ${APP_BITCOIN_NODE_IP}
       APP_BITCOIN_RPC_PORT: ${APP_BITCOIN_RPC_PORT}
       APP_BITCOIN_RPC_USER: ${APP_BITCOIN_RPC_USER}
