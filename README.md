@@ -48,11 +48,11 @@ displayed browser hostname is not reachable from the miner.
 The per-channel SV2 username may be a valid mainnet payout address. If it is a
 worker label instead, the package payout address is used.
 
-The initial appliance package disables GridPool's administrative API. It does
-not provision an operator password; the dashboard hides operator-only controls
-and exposes the non-sensitive miner connection and health information needed
-for normal operation. Advanced operators may explicitly enable the API and set
-a strong key in local configuration.
+The appliance disables GridPool's destructive administrative API and does not
+provision an operator password. Because Umbrel's authenticated app proxy is the
+access boundary, the dashboard displays read-only operator diagnostics directly
+and hides the operator-unlock control. Advanced operators may explicitly enable
+the write API and set a strong key in local configuration.
 
 ## Persistence and backup
 

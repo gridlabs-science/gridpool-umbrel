@@ -32,5 +32,6 @@
   "native_sv2_enabled": true,
   "native_sv2_public_host": "",
   "native_sv2_public_port": 34265,
-  "enable_admin_api": false
+  "enable_admin_api": false,
+  "trusted_private_dashboard_enabled": true
 }
