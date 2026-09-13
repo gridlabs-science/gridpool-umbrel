@@ -20,7 +20,7 @@ services:
       - ${APP_DATA_DIR}/templates:/templates:ro
 
   gridpool:
-    image: ghcr.io/gridlabs-science/boot-protocol@sha256:8672c835b14f8fcad8a358e5b80ae945d6973b5039c706437b3b1c4bdff6f5d5
+    image: ghcr.io/gridlabs-science/boot-protocol@sha256:a0481ca57db41f9c88ece8f29c7f149755402c67fe1199df03e9612fd3430563
     depends_on:
       init:
         condition: service_completed_successfully
