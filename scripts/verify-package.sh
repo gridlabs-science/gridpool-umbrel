@@ -7,6 +7,7 @@ template="gridlabs-gridpool/templates/boot_portal_config.json.template"
 for script in gridlabs-gridpool/templates/*.sh; do sh -n "$script"; done
 ruby -e 'require "yaml"; YAML.load_file(ARGV[0])' "$compose"
 ruby -e 'require "yaml"; YAML.load_file(ARGV[0])' gridlabs-gridpool/umbrel-app.yml
+package_version="$(ruby -e 'require "yaml"; puts YAML.load_file(ARGV[0]).fetch("version")' gridlabs-gridpool/umbrel-app.yml)"
 
 references="$(grep -oE 'ghcr\.io/[^ @]+@sha256:[0-9a-f]{64}' "$compose" | sort -u)"
 [[ "$(printf '%s\n' "$references" | sed '/^$/d' | wc -l)" -eq 2 ]]
@@ -14,6 +15,14 @@ references="$(grep -oE 'ghcr\.io/[^ @]+@sha256:[0-9a-f]{64}' "$compose" | sort -
 
 grep -q '"enable_legacy_ui": false' "$template"
 grep -q '"enable_admin_api": false' "$template"
+grep -q '"trusted_private_dashboard_enabled": true' "$template"
+grep -q 'GRIDPOOL_TRUSTED_PRIVATE_DASHBOARD_ENABLED: "true"' "$compose"
+grep -q 'GRIDPOOL_NATIVE_SV2_AUTHORITY_PUBLIC_KEY' gridlabs-gridpool/templates/init.sh
+grep -q '/shared/sv2-public.env' gridlabs-gridpool/templates/gridpool-entrypoint.sh
+grep -q 'GRIDPOOL_NATIVE_SV2_AUTHORITY_PUBLIC_KEY=' "$compose"
+grep -q '. /shared/sv2-public.env' "$compose"
+grep -q 'native_sv2_authority_public_key' "$template"
+grep -q "GRIDPOOL_PACKAGE_VERSION: \"${package_version}\"" "$compose"
 ! grep -q 'env_file' "$compose"
 ! grep -Eq '(^|[[:space:]])(8332|28332|28333|34290|5000):' "$compose"
 grep -q '34265:34265/tcp' "$compose"

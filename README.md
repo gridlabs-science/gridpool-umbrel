@@ -40,8 +40,24 @@ Point a native SV2 miner at:
 stratum2+noise://UMBREL_LAN_IP:34265
 ```
 
+The GridPool dashboard also shows this endpoint under **Connect miner**. The
+hostname is inferred from the browser when the package does not have a public
+hostname configured, so use the Umbrel device's LAN hostname or IP if the
+displayed browser hostname is not reachable from the miner.
+
+The dashboard also displays the pool's persisted Noise authority public key.
+AxeOS miners require this value in **Pool > Show Advanced Options > SV2
+Authority Pubkey**. The public key identifies the server and is safe to copy;
+the corresponding private key remains inside the package data directory.
+
 The per-channel SV2 username may be a valid mainnet payout address. If it is a
 worker label instead, the package payout address is used.
+
+The appliance disables GridPool's destructive administrative API and does not
+provision an operator password. Because Umbrel's authenticated app proxy is the
+access boundary, the dashboard displays read-only operator diagnostics directly
+and hides the operator-unlock control. Advanced operators may explicitly enable
+the write API and set a strong key in local configuration.
 
 ## Persistence and backup
 

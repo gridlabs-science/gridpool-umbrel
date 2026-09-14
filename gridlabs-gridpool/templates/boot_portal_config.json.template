@@ -10,6 +10,7 @@
   "bitcoin_network": "mainnet",
   "enable_web_ui": true,
   "enable_legacy_ui": false,
+  "restart_after_setup": true,
   "boot_network_id": "mainnet-beta",
   "boot_protocol_version": 22,
   "v22_activation_block_height": 959500,
@@ -28,5 +29,10 @@
   "work_set_reserve_multiplier": 3,
   "local_adapter_token_file": "/shared/local-adapter.token",
   "local_sv2_api_url": "http://sv2:34290/api/v1/global",
-  "enable_admin_api": false
+  "native_sv2_enabled": true,
+  "native_sv2_public_host": "",
+  "native_sv2_public_port": 34265,
+  "native_sv2_authority_public_key": "${authority_public_key}",
+  "enable_admin_api": false,
+  "trusted_private_dashboard_enabled": true
 }
