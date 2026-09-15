@@ -3,8 +3,8 @@ id: gridlabs-gridpool
 implements: []
 category: bitcoin
 name: GridPool
-version: "0.2.2-beta.8"
-icon: https://raw.githubusercontent.com/gridlabs-science/gridpool-umbrel/main/gridlabs-gridpool/icon.svg
+version: "0.2.2-beta.9"
+icon: https://raw.githubusercontent.com/gridlabs-science/gridpool-umbrel/main/gridlabs-gridpool/icon.svg?v=triangle-v1
 tagline: Sovereign, non-custodial pooled mining
 description: >-
   GridPool is a peer-to-peer Bitcoin mining reward-sharing protocol. This
@@ -21,8 +21,7 @@ path: "setup"
 defaultUsername: ""
 defaultPassword: ""
 releaseNotes: >-
-  Early beta with explicit setup completion, complete native SV2 connection
-  details including the Noise authority key, private appliance diagnostics,
-  mature-network bootstrap, V2.2 security hardening, and refreshed SV2 runtime
-  OS security libraries with the mining binary unchanged.
+  Introduces the refined GridPool triangle icon with an asymmetric ranked-work
+  curve. Includes the existing setup, SV2 connection details, private diagnostics,
+  and security fixes. Runtime images and mining behavior are unchanged from beta.8.
 gallery: []
